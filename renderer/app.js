@@ -368,7 +368,7 @@ function renderHud() {
 }
 
 // ------------------------------------------------------------------ weapon list + offsets
-// Gun Mover groups with no Fallout 76 weapon: not listed, but still built with their offset so the archive stays the same
+// Weapon groups with no Fallout 76 weapon: not listed, but still built with their offset so the archive stays the same
 const HIDDEN = new Set(['deliverer']);
 
 // rebuilt (with a staggered fade-in) only when the filter changes; refreshList() updates the rows in place
@@ -526,7 +526,7 @@ async function select(id) {
   const g = byId(id);
   $('#w-title').textContent = shortName(g.desc);
   $('#w-sub').textContent = (g.desc !== shortName(g.desc) ? g.desc + '. ' : '') +
-    'Gun Mover source: ' + g.src + (g.closest ? ' (closest Fallout 4 gun)' : '') + ' = ' + g.default.map(fmt).join(', ') +
+    'Default from First Person FOV Overhaul: ' + g.src + (g.closest ? ' (closest Fallout 4 gun)' : '') + ' = ' + g.default.map(fmt).join(', ') +
     '. ' + g.folders.length + ' animation folder' + (g.folders.length > 1 ? 's' : '') + '.';
   replay($('#w-head'), 'enter');
   current = { id, pose: {} };
@@ -808,7 +808,7 @@ window.__vmTest = async ({ id, offset, fovMode, pose: p, world, ghost, parts, re
     const init = await window.vm.backend('init', {});
     groups = init.groups;
     if (!state.installed) {
-      // the archive this app replaces was built from the Gun Mover defaults (byte-identical rebuild, checked 2026-10-26)
+      // the archive this app replaces was built from the default offsets (byte-identical rebuild, checked 2026-10-26)
       state.installed = {};
       for (const g of groups) state.installed[g.desc] = info.archiveExists ? [...g.default] : [0, 0, 0];
     }

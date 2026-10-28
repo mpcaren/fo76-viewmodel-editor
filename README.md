@@ -11,7 +11,7 @@ for you.
 
 ## What it does
 
-- **Per-weapon gun positions.** 53 weapon groups with X / Y / Z sliders, Gun Mover defaults, vanilla, and undo.
+- **Per-weapon gun positions.** 53 weapon groups with X / Y / Z sliders, the mod's default positions, vanilla, and undo.
   An offset is baked into the COM track of every hip-fire first-person clip (idle, walk, run, fire, reload,
   equip…). Aim-down-sights clips are left alone, so sights stay lined up.
 - **3D preview from the game's own files.** The app reads the game's BA2 archives directly, poses the
@@ -46,7 +46,7 @@ backend/server.py  request loop
 backend/vmcore.py  preview scenes (rig, skinning, weapon assembly, Pip-Boy) and the archive build
 backend/ba2.py     archive index / reader
 backend/weapons.py preview mesh + default parts per weapon group
-backend/tools/     Weapon Reposition 76 tools: animation offset, verification, BA2 writer, NIF reader, Gun Mover table
+backend/tools/     Weapon Reposition 76 tools: animation offset, verification, BA2 writer, NIF reader, offset table
 pack.ps1           builds the portable Nexus version (renamed Electron + bundled Python)
 ```
 
@@ -75,9 +75,9 @@ downloaded. The packaged app keeps settings, cache and backups in `%APPDATA%\FO7
 
 ## Credits
 
-- [Gun Mover](https://www.nexusmods.com/fallout4/mods/92454) by jarari (Fallout 4): the original mod,
-  ported with the author's permission.
 - [First Person FOV Overhaul](https://www.nexusmods.com/fallout4/mods/105685) by HumanKvas (Fallout 4):
-  the per-weapon offsets.
+  the per-weapon offsets, used with his permission.
+- [Gun Mover](https://www.nexusmods.com/fallout4/mods/92454) by jarari (Fallout 4): the idea of moving
+  the gun away from the camera; FOV Overhaul's offsets were written for it. No files from it are used.
 - Fallout 76 Quick Configuration: the idea for the FOV page.
 - Bethesda Game Studios: Fallout 76. No game files are included; the app reads them from your install.

@@ -25,7 +25,7 @@ GUN POSITIONS
 -------------
 - Pick a weapon on the left. X = right, Y = forward, Z = up (game units). Drag the sliders, type a
   value, or use the arrow keys / Page Up / Page Down (hold Shift for bigger steps).
-- "Gun Mover default" = the mod's position, "Vanilla" = unmoved, "Undo changes" = what's installed.
+- "Mod default" = the mod's position, "Vanilla" = unmoved, "Undo changes" = what's installed.
 - Hip / Aiming / Pip-Boy switch the preview. Aiming is never changed by the mod, so sights stay
   lined up. "Vanilla outline" draws a faint outline of the unmoved gun.
 - Drag in the preview to look around the gun, scroll to zoom, double-click to return to the game view.
@@ -60,7 +60,9 @@ NOTES
 
 CREDITS
 -------
-- Gun Mover by jarari (Fallout 4) - the original mod; ported with the author's permission.
-- First Person FOV Overhaul by HumanKvas (Fallout 4) - the per-weapon offsets.
+- First Person FOV Overhaul by HumanKvas (Fallout 4) - the per-weapon offsets, used with his
+  permission.
+- Gun Mover by jarari (Fallout 4) - the idea of moving the gun away from the camera; no files
+  from it are used.
 - Quick Configuration (Fallout 76 Quick Configuration) for the idea of the FOV page.
 - Bethesda Game Studios - the original animations and meshes (read from your install, not included).

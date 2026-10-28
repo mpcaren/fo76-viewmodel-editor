@@ -1,4 +1,5 @@
-"""FO76 1st-person animation folder groups -> Gun Mover (First Person FOV Overhaul) FO4 offsets.
+"""FO76 1st-person animation folder groups -> FO4 offsets from HumanKvas's First Person FOV Overhaul
+(its Gun Mover config files; used with his permission).
 Folders that share modifiable clips (see sources.py / groups.json) MUST share one offset.
 'src' says where the numbers came from; 'closest' marks FO76-only weapons mapped to the nearest FO4 gun."""
 
