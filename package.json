@@ -1,0 +1,17 @@
+{
+  "name": "fo76-viewmodel-editor",
+  "productName": "FO76 Viewmodel Editor",
+  "version": "1.0.0",
+  "description": "Out-of-game editor for Fallout 76 viewmodel/FOV ini settings and per-weapon first-person gun positions (Weapon Reposition 76), with a 3D preview.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.1"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  }
+}

@@ -1,0 +1,120 @@
+"""Preview meshes for each Weapon Reposition group (gunmap.GROUPS, keyed by its description).
+root   = the weapon's root nif (a receiver, or the dummy whose P-Receiver point the receiver attaches to)
+prefer = connect point -> substring preferred when picking that slot's default part (e.g. pistol grip vs stock)
+None   = no mesh found in the game archives; the preview shows the hands only."""
+
+SKIP_SLOTS = ('P-ProjectileNode', 'P-Projectile', 'P-Casing', 'P-Dot', 'P-ReceiverDisplay', 'P-InternalModA',
+              'P-InternalModB', 'P-InternalModC', 'P-Muzzle', 'P-FeedThroat', 'P-Bullet', 'P-BulletSpd', 'P-Speed',
+              'P-Nuke', 'P-Missile', 'P-Scopeview', 'P-ScopePower', 'P-DrumBracket', 'P-HandLeft', 'P-HandLeft:0',
+              'P-HandRight', 'P-FlashFar', 'P-FlashShort', 'P-FlashMid')
+
+# words that make a part a worse default (mods rather than the base look)
+AVOID = ('scope', 'reflex', 'night', 'glow', 'suppress', 'silenc', 'compens', 'muzzle', 'bayonet', 'drum', 'large',
+         'extended', 'long', 'super', 'sniper', 'recoil', 'marksman', 'tactical', 'shock', 'thermal', 'recon', 'hot',
+         'workshop', 'load', 'overgrown', 'splinter', 'collapsed', 'heavy', 'finned', 'ported', 'fluted', 'big', 'mirv',
+         'tgun', 'combatrifle', 'battery', 'napalm', 'cryo', 'pyro', 'jetfuel', 'multi', 'circle', 'spin', 'riot',
+         'molded', 'shotgun', 'flamer', 'disrupt', 'deepdish', 'forceemitter', 'hex', 'plasma_', 'quad')
+PREFER = ('standard', 'iron', 'basic', 'plain', 'small', 'short', 'stock', 'sight', 'barrel01', 'grip', 'clip', 'mag01')
+
+W = 'meshes/weapons/'
+WEAPONS = {
+    '10mm Submachine Gun': {'root': W + '10mmsmg/10mmsmg_receiver.nif',
+                            'prefer': {'P-Barrel': 'raw', 'P-Mag': 'clip', 'P-Grip': 'basic', 'P-FrontSight': '001'}},
+    '.44 Pistol': {'root': W + '44/44.nif', 'prefer': {'P-Barrel': 'short', 'P-Grip': '44grips', 'P-Scope': '44sights'}},
+    'Alien Blaster': {'root': W + 'alienblaster/alienblaster.nif', 'prefer': {'P-Grip': 'grip.nif'}},
+    'Combat Shotgun, Combat Rifle, Alien Disintegrator (shared clips)': {
+        'root': W + 'combatshotgun/combatshotgun.nif',
+        'prefer': {'P-Barrel': 'combatshotgunbarrel.nif', 'P-Grip': 'stock.nif', 'P-Mag': 'combatshotgunsmallmag',
+                   'P-Scope': 'combatriflesightsiron'}},
+    'Auto Grenade Launcher': {'root': W + 'autogrenadelauncher/autogrenadelauncherreceiver.nif'},
+    'Black Powder Pistol / Blunderbuss': {'root': W + 'blackpowderpistol/blackpowder_stock.nif'},
+    'Black Powder Rifle / The Dragon': {'root': W + 'blackpowderrifle/blackpowderrifle_stock.nif'},
+    '10mm Pistol, Crusader Pistol (shared clips)': {
+        'root': W + '10mmpistol/10mmrecieverdummy.nif',
+        'prefer': {'P-Barrel': 'zz-none', 'P-Grip': '10mmgrip', 'P-Mag': '10mmmag01', 'P-Scope': 'zz-none'}},
+    'Broadsider': {'root': W + 'broadsider/broadsider.nif', 'prefer': {'P-Barrel': 'barrelstandard'}},
+    'Deliverer': None,
+    'Crossbow': {'root': W + 'crossbow/crossbow.nif', 'prefer': {'P-Scope': 'zz-none'}},
+    'Cryolator': {'root': W + 'cryolator/cryolator.nif', 'prefer': {'P-Scope': 'zz-none', 'P-Grip': 'zz-none'}},
+    'Double-Barrel Shotgun': {'root': W + 'shotgun/shotgun.nif', 'prefer': {'P-Scope': 'zz-none'}},
+    'Fat Man': {'root': W + 'fatman/fatman.nif', 'prefer': {'P-Barrel': 'mininukestandardbarrel'}},
+    'Flamer, Cremator': {'root': W + 'flamer/flamer.nif',
+                         'prefer': {'P-Barrel': 'flamerbarrelshort', 'P-Mag': 'flamerpropellenttank',
+                                    'P-Receiver': 'flamerfueltank'}},
+    'Flare Gun': {'root': W + 'flaregun/flaregun.nif'},
+    'Gamma Gun, Acid Soaker': {'root': W + 'gammagun/gammagun.nif', 'prefer': {'P-Barrel': 'dish.nif'}},
+    'Gatling Gun': {'root': W + 'gatlinggun/gatlinggunreceiver.nif'},
+    'Gatling Laser': {'root': W + 'laserweapons/gatlinglaser/gatlinglaser.nif',
+                      'prefer': {'P-Barrel': 'gatlinglaserbarrelstandard'}},
+    'Gatling Plasma, Plasma Caster (shared clips)': {'root': W + 'plasmagatling/plasmagatling.nif',
+                                                     'prefer': {'P-Scope': 'zz-none'}},
+    'Gauss Pistol': {'root': W + 'gausspistol/gausspistolreceiverdummy.nif',
+                     'prefer': {'P-Barrel': 'static_barrel', 'P-Mag': 'zz-none', 'P-Scope': 'gausspistol_sights'}},
+    'Gauss Rifle': {'root': W + 'gaussrifle/gaussrifle.nif', 'prefer': {'P-Mag': 'magsmall', 'P-Grip': 'woodengrip',
+                                                                        'P-Scope': 'ironsights', 'P-Barrel': 'zz-none'}},
+    'Hunting Rifle, Gauss Shotgun (Gauss Shotgun borrows 43 hunting-rifle clips)': {
+        'root': W + 'huntingrifle/huntingrifledummyparent.nif',
+        'prefer': {'P-Barrel': 'huntingriflebarrel.nif', 'P-Grip': 'huntingriflestockshort', 'P-Scope': 'ironsights'}},
+    'Pipe Revolver (pistol grip)': {'root': W + 'handmade/recievers/revolverreceiver.nif',
+                                    'prefer': {'P-Grip': 'handmadepistolgrip', 'P-Barrel': 'coppershortbarrel',
+                                               'P-Scope': 'piperevolverironsights'}},
+    'Pipe Revolver (rifle grip)': {'root': W + 'handmade/recievers/revolverreceiver.nif',
+                                   'prefer': {'P-Grip': 'pipestock', 'P-Barrel': 'coppershortbarrel',
+                                              'P-Scope': 'piperevolverironsights'}},
+    'Pipe Gun / Pipe Bolt-Action (rifle grip)': {'root': W + 'handmade/recievers/piperiflesa.nif',
+                                                 'prefer': {'P-Grip': 'pipestock', 'P-Barrel': 'coppershortbarrel',
+                                                            'P-Mag': '45straightmagshort', 'P-Scope': 'piperifleironsights'}},
+    'Pipe Gun / Pipe Bolt-Action (pistol grip)': {'root': W + 'handmade/recievers/piperiflesa.nif',
+                                                  'prefer': {'P-Grip': 'handmadepistolgrip', 'P-Barrel': 'coppershortbarrel',
+                                                             'P-Mag': '45straightmagshort', 'P-Scope': 'piperifleironsights'}},
+    'Light Machine Gun': {'root': W + 'mg42/mg42.nif'},
+    'Junk Jet': {'root': W + 'junkjet/junkjet.nif'},
+    'Laser Musket': {'root': W + 'lasermusket/lasermusket.nif'},
+    'Laser Gun (pistol grip)': {'root': W + 'laserweapons/laserweapondummyreceiver.nif',
+                                'prefer': {'P-Grip': 'laserpistolgrip', 'P-Barrel': 'laserpistolbarrel',
+                                           'P-Scope': 'laserironsights'}},
+    'Laser Gun (rifle grip)': {'root': W + 'laserweapons/laserweapondummyreceiver.nif',
+                               'prefer': {'P-Grip': 'laserriflestock', 'P-Barrel': 'laserriflebarrel.nif',
+                                          'P-Scope': 'laserironsights'}},
+    'Laser Gun rapid/sniper barrel, V63 Laser Carbine (shared clips)': {
+        'root': W + 'laserweapons/laserweapondummyreceiver.nif',
+        'prefer': {'P-Grip': 'laserriflestock', 'P-Barrel': 'laserassaultbarrel', 'P-Scope': 'laserironsights'}},
+    'Handmade Rifle (+Screaming Eagle, Light Em Up skins)': {
+        'root': 'meshes/dlc04/weapons/raiderguns/hmarstandard.nif',
+        'prefer': {'P-Barrel': 'barrellightnoguard', 'P-Mag': 'mag30', 'P-Grip': 'zz-none', 'P-Scope': 'zz-none'}},
+    '.50 Cal Machine Gun': {'root': W + 'm2/m2receiver.nif'},
+    'M79 Grenade Launcher': {'root': W + 'm79/m79.nif'},
+    'Minigun, Pepper Shaker (Pepper Shaker borrows 47 minigun clips)': {
+        'root': W + 'minigun/minigun.nif', 'prefer': {'P-Barrel': 'minigunbarrel.nif', 'P-Scope': 'zz-none'}},
+    'Missile Launcher, Hellstorm/Quad Launcher, Tesla Cannon': {'root': W + 'missilelauncher/missilelauncher.nif'},
+    'Nitro (pistol grip)': {'root': W + 'nitro/nitro.nif', 'prefer': {'P-Grip': 'nitrogrip', 'P-Barrel': 'barrel_short',
+                                                                      'P-Mag': 'cylinder_6shot', 'P-Scope': 'zz-none'}},
+    'Nitro (rifle grip)': {'root': W + 'nitro/nitro.nif', 'prefer': {'P-Grip': 'nitrostock', 'P-Barrel': 'barrel_short',
+                                                                     'P-Mag': 'cylinder_6shot', 'P-Scope': 'zz-none'}},
+    'Plasma / Enclave Plasma (pistol grip), Assaultron Head': {
+        'root': W + 'plasma/dummyreciever.nif',
+        'prefer': {'P-Grip': 'pistolgrip', 'P-Barrel': 'zz-none', 'P-Mag': 'plasmacell', 'P-Scope': 'zz-none'}},
+    'Plasma / Enclave Plasma (rifle grip)': {
+        'root': W + 'plasma/dummyreciever.nif',
+        'prefer': {'P-Grip': 'riflestock01', 'P-Barrel': 'zz-none', 'P-Mag': 'plasmacell', 'P-Scope': 'zz-none'}},
+    'Pump Action Shotgun': {'root': W + 'pumpshotgun/pumpshotgun_rec_plain.nif'},
+    'Railway Rifle': {'root': W + 'railwayrifle/railwayrifle.nif', 'prefer': {'P-Scope': 'zz-none'}},
+    'Assault Rifle': {'root': W + 'machinegun/machinegunreceiver.nif',
+                      'prefer': {'P-Barrel': 'mgbarrelshort', 'P-Mag': 'mgmagstraight', 'P-Grip': 'mgstockstandard',
+                                 'P-Scope': 'mgsight'}},
+    'Single Action Revolver': {'root': W + 'singleactionrevolver/coltsaa.nif'},
+    # FO76's Submachine Gun (editor ID SubmachineGun) is the Tommy gun; its parts are the "tgun" meshes in combatshotgun/
+    'Submachine Gun': {'root': W + 'combatshotgun/tgunreceiver.nif',
+                       'prefer': {'P-Barrel': 'barrelstandard', 'P-Mag': 'tgundrummag.nif', 'P-Grip': 'tgungrip01', 'P-Scope': 'tgunsights.nif'}},
+    'Syringer': {'root': W + 'handmade/recievers/syringer.nif',
+                 'prefer': {'P-Grip': 'pipestock', 'P-Barrel': 'coppershortbarrel', 'P-Scope': 'syringerironsights'}},
+    'War Shrike': {'root': W + 'warshrike/warshrike.nif'},
+    'Thirst Zapper (all mags)': {'root': 'meshes/dlc04/weapons/thirstzapper/thirstzapper.nif'},
+    'Tesla Rifle / Lightning Gun': {'root': 'meshes/dlc01/weapons/lightninggun/lightninggun.nif',
+                                    'prefer': {'P-Barrel': 'barrel01', 'P-Scope': 'lightninggunsight'}},
+    'Radium Rifle': {'root': 'meshes/dlc03/weapons/gammarifle/gammariflereceiver.nif',
+                     'prefer': {'P-Barrel': 'barrelstandard', 'P-Mag': 'magshort', 'P-Grip': 'stockstandard',
+                                'P-Scope': 'zz-none'}},
+    'Harpoon Gun': {'root': 'meshes/dlc03/weapons/harpoongun/harpoongunreceiver.nif'},
+    'Lever Action Rifle': {'root': 'meshes/dlc03/weapons/levergun/levergun.nif'},
+}
